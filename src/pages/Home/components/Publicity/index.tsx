@@ -1,6 +1,14 @@
-import { PublicityContainer, PublicityContent, PublicityItens, PublicityTitle } from './styles';
+import {
+  PublicityContainer,
+  PublicityContent,
+  PublicityItem,
+  PublicityItensContainer,
+  PublicitySubTitle,
+  PublicityTitle,
+} from './styles';
 import publicityImg from '../../../../assets/publicity-img.png';
-import { ShoppingCart } from 'phosphor-react';
+import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react';
+import styled from 'styled-components';
 
 export function Publicity() {
   return (
@@ -11,19 +19,42 @@ export function Publicity() {
             <PublicityTitle>
               Encontre o café perfeito para qualquer hora do dia
             </PublicityTitle>
-            <h4>
+
+            <PublicitySubTitle>
               Com o Coffee Delivery você recebe seu café onde estiver, a
               qualquer hora
-            </h4>
+            </PublicitySubTitle>
           </section>
 
-          <PublicityItens>
-            <ShoppingCart 
-            
-            />
-            
-          </PublicityItens>
+          <PublicityItensContainer>
+            <PublicityItem backgroundColor="yellow_dark">
+              <span>
+                <ShoppingCart weight="fill" />
+              </span>
+              Compra simples e segura
+            </PublicityItem>
 
+            <PublicityItem backgroundColor="gray_dark">
+              <span>
+                <Package weight="fill" />
+              </span>
+              Embalagem mantém o café intacto
+            </PublicityItem>
+
+            <PublicityItem backgroundColor="yellow">
+              <span>
+                <Timer weight="fill" />
+              </span>
+              Compra simples e segura
+            </PublicityItem>
+
+            <PublicityItem backgroundColor="purple">
+              <span>
+                <Coffee weight="fill" />
+              </span>
+              Compra simples e segura
+            </PublicityItem>
+          </PublicityItensContainer>
         </div>
 
         <img src={publicityImg} />

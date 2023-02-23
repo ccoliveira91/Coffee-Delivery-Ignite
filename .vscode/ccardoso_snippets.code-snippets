@@ -22,5 +22,19 @@
 			"${(props) => props.theme[]}"
 		],
 		"description": "Props theme provider styled"
+	},
+
+	"Função": {
+		"scope": "javascript,typescript",
+		"prefix": ".exp",
+		"body": [
+			"export function Name() {",
+				"return (",
+					"<>",
+					"</>",
+				")",
+			"}"
+		],
+		"description": "export function"
 	}
 }
