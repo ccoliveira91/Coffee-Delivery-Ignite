@@ -84,3 +84,25 @@ export const CoffeeCardFooter = styled.div`
     }
   }
 `;
+
+export const AddCartWrapper = styled.div`
+  width: 7.5rem;
+
+  > button {
+    width: 2.375rem;
+    height: 2.375rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: ${(props) => props.theme.colors['brand-purple-dark']};
+    color: ${(props) => props.theme.colors['base-card']};
+    border-radius: 6px;
+    margin-left: 0.3rem;
+    transition: 0.4s;
+
+    &:hover {
+      background: ${(props) => props.theme.colors['brand-purple']};
+    }
+  }
+`;
