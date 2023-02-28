@@ -7,7 +7,7 @@ export function QuantityInput() {
       <IconWrapper>
         <Minus size={14} weight="fill" />
       </IconWrapper>
-      <input type="number" readOnly value={1} />
+      <input type="number" step={1} placeholder="1" />
       <IconWrapper>
         <Plus size={14} weight="fill" />
       </IconWrapper>

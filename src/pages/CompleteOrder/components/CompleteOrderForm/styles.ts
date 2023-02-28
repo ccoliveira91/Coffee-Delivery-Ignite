@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { SectionBaseSyle } from '../../styles';
 
 export const CompleteOrderFormContainer = styled.div`
@@ -10,9 +10,10 @@ export const CompleteOrderFormContainer = styled.div`
 
 export const FormTitle = styled.div`
   display: flex;
-  size: 1.125rem;
+  font-size: 1.125rem;
   font-weight: 700;
   font-family: 'Baloo 2', cursive;
+  line-height: 130%;
 `;
 
 export const FormSectionContainer = styled(SectionBaseSyle)`
@@ -40,7 +41,7 @@ export const AddressFormContainer = styled.div`
   }
 `;
 
-export const PaymentMethodOptionsContainer = styled.div`
+export const PaymentOptionsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
@@ -48,4 +49,5 @@ export const PaymentMethodOptionsContainer = styled.div`
     grid-column: span 3;
     color: ${({ theme }) => theme.colors['base-error']};
   }
+
 `;
