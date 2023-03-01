@@ -13,3 +13,15 @@ export const DetailsContainer = styled(SectionBaseSyle)`
   display: flex;
   flex-direction: column;
 `;
+
+export const TotalsSelectedCoffeeContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 0.844rem;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;

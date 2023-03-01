@@ -1,13 +1,28 @@
 import styled from 'styled-components';
 
 export const CartCoffeeCardContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  border-bottom: 1px solid ${(props) => props.theme.colors['base-button']};
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: space-between;
 
-  img {
-    width: 4rem;
-    height: 4rem;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+
+    img {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+
+  > p {
+    align-self: flex-start;
+    font-weight: 700;
   }
 `;
 

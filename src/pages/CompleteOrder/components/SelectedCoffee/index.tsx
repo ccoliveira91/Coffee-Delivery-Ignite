@@ -1,6 +1,7 @@
 import { TitleText } from '../../../../components/Typography';
 import { CartCoffeeCard } from '../CartCoffeeCard';
 import { DetailsContainer, SelectedCoffeeContainer } from './styles';
+import { TotalsSelectedCoffee } from './TotalsSelectedCoffe';
 
 export function SelectedCoffee() {
   return (
@@ -11,6 +12,10 @@ export function SelectedCoffee() {
 
       <DetailsContainer>
         <CartCoffeeCard />
+        <CartCoffeeCard />
+        <CartCoffeeCard />
+
+        <TotalsSelectedCoffee />
       </DetailsContainer>
     </SelectedCoffeeContainer>
   );

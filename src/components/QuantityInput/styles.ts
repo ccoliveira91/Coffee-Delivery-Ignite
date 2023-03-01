@@ -1,16 +1,16 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const QuantityInputContainer = styled.div`
-flex: 1;
-background: ${(props) => props.theme.colors['base-button']};
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 4px;
-border-radius: 6px;
-padding: 0.5rem;
+  flex: 1;
+  background: ${(props) => props.theme.colors['base-button']};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  border-radius: 6px;
+  padding: 0.5rem;
 
-input {
+  input {
     text-align: center;
     width: 100%;
     background: none;
@@ -18,13 +18,13 @@ input {
     color: ${(props) => props.theme.colors['base-title']};
 
     &:focus {
-        outline: none;
+      outline: none;
     }
-}
+  }
 `;
 
 export const IconWrapper = styled.button.attrs({
-    type: "button", 
+    type: "button",
 })`
 width: 0.875rem;
 height: 0.875rem;

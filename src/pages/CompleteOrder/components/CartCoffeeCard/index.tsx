@@ -9,20 +9,27 @@ import { QuantityInput } from '../../../../components/QuantityInput';
 import { Trash } from 'phosphor-react';
 
 export function CartCoffeeCard() {
+  function handleStepUp() {}
+  function handleStepDown() {}
+
   return (
     <CartCoffeeCardContainer>
       <div>
         <img src={arabe} />
-      </div>
-      <div>
-        <RegularText color="subtitle">Expresso Tradicional</RegularText>
-        <CartOptionsContainer>
-          <QuantityInput />
-          <CartCoffeeRemove>
-            <Trash size={16} />
-            Remover
-          </CartCoffeeRemove>
-        </CartOptionsContainer>
+        <div>
+          <RegularText color="subtitle">Expresso Tradicional</RegularText>
+          <CartOptionsContainer>
+            <QuantityInput
+              onStepDown={handleStepDown}
+              onStepUp={handleStepUp}
+              quantity={1}
+            />
+            <CartCoffeeRemove>
+              <Trash size={16} />
+              Remover
+            </CartCoffeeRemove>
+          </CartOptionsContainer>
+        </div>
       </div>
 
       <p>R$ 9,90</p>
