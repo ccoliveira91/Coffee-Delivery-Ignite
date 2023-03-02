@@ -20,9 +20,13 @@ export const CartCoffeeCardContainer = styled.div`
     }
   }
 
-  > p {
+  > span {
     align-self: flex-start;
     font-weight: 700;
+
+    p {
+      font-weight: 700;
+    }
   }
 `;
 

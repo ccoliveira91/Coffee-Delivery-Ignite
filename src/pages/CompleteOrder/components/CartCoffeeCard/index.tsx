@@ -8,21 +8,28 @@ import { RegularText } from '../../../../components/Typography';
 import { QuantityInput } from '../../../../components/QuantityInput';
 import { Trash } from 'phosphor-react';
 
-export function CartCoffeeCard() {
-  function handleStepUp() {}
-  function handleStepDown() {}
+import { CartItem } from '../../../../contexts/CartContext';
+
+interface CartCoffeeCardProps {
+  product: CartItem;
+}
+
+export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
+  function handleIncrease() {}
+
+  function handleDecrease() {}
 
   return (
     <CartCoffeeCardContainer>
       <div>
         <img src={arabe} />
         <div>
-          <RegularText color="subtitle">Expresso Tradicional</RegularText>
+          <RegularText color="subtitle">{product.name}</RegularText>
           <CartOptionsContainer>
             <QuantityInput
-              onStepDown={handleStepDown}
-              onStepUp={handleStepUp}
-              quantity={1}
+              onStepDown={handleDecrease}
+              onStepUp={handleIncrease}
+              quantity={product.quantity}
             />
             <CartCoffeeRemove>
               <Trash size={16} />
@@ -32,7 +39,14 @@ export function CartCoffeeCard() {
         </div>
       </div>
 
-      <p>R$ 9,90</p>
+      <span>
+        R$
+        <p>
+          {product.price.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+          })}
+        </p>
+      </span>
     </CartCoffeeCardContainer>
   );
 }

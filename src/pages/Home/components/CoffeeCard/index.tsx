@@ -8,6 +8,8 @@ import {
 import expressotradicional from '../../../../assets/coffees-images/expresso-tradicional.svg';
 import { QuantityInput } from '../../../../components/QuantityInput';
 import { ShoppingCart } from 'phosphor-react';
+import { useContext, useState } from 'react';
+import { CartContext } from '../../../../contexts/CartContext';
 
 export interface Product {
   id: number;
@@ -23,11 +25,30 @@ interface ProductProps {
 }
 
 export function CoffeeCard({ product }: ProductProps) {
+  const [quantity, setQuantity] = useState(1);
+
+  function handleIncrease() {
+    setQuantity((state) => state + 1);
+  }
+
+  function handleDecrease() {
+    setQuantity((state) => state - 1);
+  }
+
+  const { addProductToCart } = useContext(CartContext);
+  function handleAddToCart() {
+    const productToAdd = {
+      ...product,
+      quantity,
+    };
+    addProductToCart(productToAdd);
+  }
+
   return (
     <CoffeeCardContainer>
       <img src={product.imageUrl} />
       <CoffeTag>
-        {product.tags.map(tag => (
+        {product.tags.map((tag) => (
           <span key={`${product.id}${tag}`}>{tag}</span>
         ))}
       </CoffeTag>
@@ -39,11 +60,19 @@ export function CoffeeCard({ product }: ProductProps) {
       <CoffeeCardFooter>
         <div>
           <span>R$</span>
-          <h2>{product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</h2>
+          <h2>
+            {product.price.toLocaleString('pt-BR', {
+              minimumFractionDigits: 2,
+            })}
+          </h2>
         </div>
         <AddCartWrapper>
-          <QuantityInput />
-          <button>
+          <QuantityInput
+            onStepUp={handleIncrease}
+            onStepDown={handleDecrease}
+            quantity={quantity}
+          />
+          <button onClick={handleAddToCart}>
             <ShoppingCart weight="fill" size={22} />
           </button>
         </AddCartWrapper>
