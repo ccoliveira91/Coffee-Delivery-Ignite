@@ -8,21 +8,34 @@ import { RegularText } from '../../../../components/Typography';
 import { QuantityInput } from '../../../../components/QuantityInput';
 import { Trash } from 'phosphor-react';
 
-import { CartItem } from '../../../../contexts/CartContext';
+import { CartContext, CartItem } from '../../../../contexts/CartContext';
+import { useContext } from 'react';
 
 interface CartCoffeeCardProps {
   product: CartItem;
 }
 
 export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
-  function handleIncrease() {}
+  const productTotal = product.price * product.quantity;
 
-  function handleDecrease() {}
+  const { changeCartItemQuantity, deleteCartItem } = useContext(CartContext);
+
+  function handleIncrease() {
+    changeCartItemQuantity(product.id, 'increase')
+  }
+
+  function handleDecrease() {
+    changeCartItemQuantity(product.id, 'decrease')
+  }
+
+  function handleDeleteItem() {
+    deleteCartItem(product.id)
+  }
 
   return (
     <CartCoffeeCardContainer>
       <div>
-        <img src={arabe} />
+        <img src={product.imageUrl} />
         <div>
           <RegularText color="subtitle">{product.name}</RegularText>
           <CartOptionsContainer>
@@ -32,21 +45,19 @@ export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
               quantity={product.quantity}
             />
             <CartCoffeeRemove>
-              <Trash size={16} />
+              <Trash size={16} onClick={handleDeleteItem}/>
               Remover
             </CartCoffeeRemove>
           </CartOptionsContainer>
         </div>
       </div>
 
-      <span>
-        R$
-        <p>
-          {product.price.toLocaleString('pt-BR', {
-            minimumFractionDigits: 2,
-          })}
-        </p>
-      </span>
+      <p>
+        R${' '}
+        {productTotal.toLocaleString('pt-BR', {
+          minimumFractionDigits: 2,
+        })}
+      </p>
     </CartCoffeeCardContainer>
   );
 }

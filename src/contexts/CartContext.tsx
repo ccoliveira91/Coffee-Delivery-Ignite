@@ -10,6 +10,11 @@ interface CartContextType {
   cartItems: CartItem[];
   cartQuantity: number;
   addProductToCart: (product: CartItem) => void;
+  changeCartItemQuantity: (
+    cartItemId: number,
+    type: 'increase' | 'decrease'
+  ) => void;
+  deleteCartItem: (cartItemId: number) => void;
 }
 
 interface CartContextProviderProps {
@@ -38,8 +43,38 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems(newCart);
   }
 
+  function changeCartItemQuantity(
+    cartItemid: number,
+    type: 'increase' | 'decrease'
+  ) {
+    const newCart = produce(cartItems, (draft) => {
+      const productExistsInCart = cartItems.findIndex(
+        (cartItem) => cartItem.id === cartItemid
+      );
+      if (productExistsInCart >= 0) {
+        const item = draft[productExistsInCart];
+        draft[productExistsInCart].quantity =
+          type === 'increase' ? item.quantity + 1 : item.quantity - 1;
+      }
+    });
+    setCartItems(newCart);
+  }
+
+  function deleteCartItem(cartItemId: number) {
+    setCartItems((state) => state.filter((item) => item.id !== cartItemId));
+  }
+  // draft.splice(productExistsInCart, 1);
+
   return (
-    <CartContext.Provider value={{ cartItems, addProductToCart, cartQuantity }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addProductToCart,
+        cartQuantity,
+        changeCartItemQuantity,
+        deleteCartItem,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
