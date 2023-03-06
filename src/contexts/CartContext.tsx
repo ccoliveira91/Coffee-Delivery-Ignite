@@ -15,6 +15,7 @@ interface CartContextType {
     type: 'increase' | 'decrease'
   ) => void;
   deleteCartItem: (cartItemId: number) => void;
+  cartItemsTotal: number;
 }
 
 interface CartContextProviderProps {
@@ -27,6 +28,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const cartQuantity = cartItems.length;
+
+  const cartItemsTotal = cartItems.reduce((total, cartItem) => {
+    return total + cartItem.price * cartItem.quantity;
+  }, 0);
 
   function addProductToCart(product: CartItem) {
     const productAllreadyExistInCart = cartItems.findIndex(
@@ -60,10 +65,18 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems(newCart);
   }
 
-  function deleteCartItem(cartItemId: number) {
-    setCartItems((state) => state.filter((item) => item.id !== cartItemId));
+  function deleteCartItem(cartItemid: number) {
+    const newCart = produce(cartItems, (draft) => {
+      const productExistsInCart = cartItems.findIndex(
+        (cartItem) => cartItem.id === cartItemid
+      );
+      if (productExistsInCart >= 0) {
+        draft.splice(productExistsInCart /*the index */, 1);
+        // filter(t => t.id !== action.id);
+      }
+    });
+    setCartItems(newCart);
   }
-  // draft.splice(productExistsInCart, 1);
 
   return (
     <CartContext.Provider
@@ -73,6 +86,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         cartQuantity,
         changeCartItemQuantity,
         deleteCartItem,
+        cartItemsTotal,
       }}
     >
       {children}

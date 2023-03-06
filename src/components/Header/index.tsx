@@ -23,7 +23,7 @@ import { CartContext } from "../../contexts/CartContext";
           <HeaderButtonsContainer>
             <HeaderButton variant="purple">
               <MapPin size={20} weight="fill" />
-              Porto Alegre, RS
+              Cedral, SP
             </HeaderButton>
             <NavLink to="/completeOrder">
               <HeaderButton variant="yellow">

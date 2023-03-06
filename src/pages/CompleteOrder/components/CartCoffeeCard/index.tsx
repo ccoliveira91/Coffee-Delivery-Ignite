@@ -21,15 +21,15 @@ export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
   const { changeCartItemQuantity, deleteCartItem } = useContext(CartContext);
 
   function handleIncrease() {
-    changeCartItemQuantity(product.id, 'increase')
+    changeCartItemQuantity(product.id, 'increase');
   }
 
   function handleDecrease() {
-    changeCartItemQuantity(product.id, 'decrease')
+    changeCartItemQuantity(product.id, 'decrease');
   }
 
   function handleDeleteItem() {
-    deleteCartItem(product.id)
+    deleteCartItem(product.id);
   }
 
   return (
@@ -44,9 +44,9 @@ export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
               onStepUp={handleIncrease}
               quantity={product.quantity}
             />
-            <CartCoffeeRemove>
-              <Trash size={16} onClick={handleDeleteItem}/>
-              Remover
+            <CartCoffeeRemove type="button" onClick={handleDeleteItem}>
+              <Trash size={16} />
+              REMOVER
             </CartCoffeeRemove>
           </CartOptionsContainer>
         </div>
