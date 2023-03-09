@@ -1,12 +1,31 @@
-import { createContext, ReactNode, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import { Product } from '../pages/Home/components/CoffeeCard';
 import { produce } from 'immer';
+import { Order, orderReducer } from '../reducer/order-reducer';
 
 export interface CartItem extends Product {
+  id: number;
   quantity: number;
 }
 
+export interface Address {
+  cep: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  uf: string;
+}
+
 interface CartContextType {
+  orderState: Order;
+  addItemToOrder: (item: CartItem) => void;
   cartItems: CartItem[];
   cartQuantity: number;
   addProductToCart: (product: CartItem) => void;
@@ -25,6 +44,15 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextType);
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
+  const [orderState, dispach] = useReducer(orderReducer, {
+    id: '',
+    items: [],
+    address: {} as Address,
+    payment: 0,
+    deliveryPrice: 0,
+    totalPrice: 0,
+  } as Order);
+
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const cartQuantity = cartItems.length;
@@ -32,6 +60,21 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   const cartItemsTotal = cartItems.reduce((total, cartItem) => {
     return total + cartItem.price * cartItem.quantity;
   }, 0);
+
+  const [orderIsValid, setOrderIsValid] = useState<boolean>(false);
+
+  useEffect(() => {}, [orderIsValid]);
+
+  function validationOrder() {}
+
+  function addItemToOrder(item: CartItem) {
+    dispach({
+      type: 'ADD_PRODUCT_TO_CART',
+      payload: {
+        item: item,
+      },
+    });
+  }
 
   function addProductToCart(product: CartItem) {
     const productAllreadyExistInCart = cartItems.findIndex(
@@ -81,6 +124,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   return (
     <CartContext.Provider
       value={{
+        orderState,
+        addItemToOrder,
         cartItems,
         addProductToCart,
         cartQuantity,

@@ -9,7 +9,7 @@ import expressotradicional from '../../../../assets/coffees-images/expresso-trad
 import { QuantityInput } from '../../../../components/QuantityInput';
 import { ShoppingCart } from 'phosphor-react';
 import { useContext, useState } from 'react';
-import { CartContext } from '../../../../contexts/CartContext';
+import { CartContext, CartItem } from '../../../../contexts/CartContext';
 
 export interface Product {
   id: number;
@@ -26,6 +26,7 @@ interface ProductProps {
 
 export function CoffeeCard({ product }: ProductProps) {
   const [quantity, setQuantity] = useState(1);
+  const { addItemToOrder } = useContext(CartContext);
 
   function handleIncrease() {
     setQuantity((state) => state + 1);
@@ -35,13 +36,17 @@ export function CoffeeCard({ product }: ProductProps) {
     setQuantity((state) => state - 1);
   }
 
-  const { addProductToCart } = useContext(CartContext);
   function handleAddToCart() {
     const productToAdd = {
-      ...product,
-      quantity,
+      id: product.id,
+      quantity: quantity,
+      tags: product.tags,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
     };
-    addProductToCart(productToAdd);
+    addItemToOrder(productToAdd);
   }
 
   return (
