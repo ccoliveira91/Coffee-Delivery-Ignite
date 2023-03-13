@@ -6,7 +6,7 @@ import { DetailsContainer, SelectedCoffeeContainer } from './styles';
 import { TotalsSelectedCoffee } from './TotalsSelectedCoffe';
 
 export function SelectedCoffee() {
-  const { cartItems } = useContext(CartContext);
+  const { orderState } = useContext(CartContext);
 
   return (
     <SelectedCoffeeContainer>
@@ -15,7 +15,7 @@ export function SelectedCoffee() {
       </TitleText>
 
       <DetailsContainer>
-        {cartItems.map((item) => (
+        {orderState.items.map((item) => (
           <CartCoffeeCard key={item.id} product={item} />
         ))}
 

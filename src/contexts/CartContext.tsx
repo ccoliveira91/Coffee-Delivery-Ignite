@@ -23,7 +23,7 @@ export interface Address {
   uf: string;
 }
 
-interface CartContextType {
+export interface CartContextType {
   orderState: Order;
   addItemToOrder: (item: CartItem) => void;
   cartItems: CartItem[];
@@ -46,7 +46,7 @@ export const CartContext = createContext({} as CartContextType);
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [orderState, dispach] = useReducer(orderReducer, {
     id: '',
-    items: [],
+    items: [] as CartItem[],
     address: {} as Address,
     payment: 0,
     deliveryPrice: 0,
@@ -65,11 +65,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   useEffect(() => {}, [orderIsValid]);
 
-  function validationOrder() {}
+  // function validationOrder() {}
 
   function addItemToOrder(item: CartItem) {
     dispach({
-      type: 'ADD_PRODUCT_TO_CART',
+      type: 'ADD_PRODUCT_TO_ORDER',
       payload: {
         item: item,
       },
