@@ -3,7 +3,6 @@ import {
   CartCoffeeRemove,
   CartOptionsContainer,
 } from './styles';
-import arabe from '../../../../assets/products/arabe.svg';
 import { RegularText } from '../../../../components/Typography';
 import { QuantityInput } from '../../../../components/QuantityInput';
 import { Trash } from 'phosphor-react';
@@ -18,18 +17,22 @@ interface CartCoffeeCardProps {
 export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
   const productTotal = product.price * product.quantity;
 
-  const { changeCartItemQuantity, deleteCartItem } = useContext(CartContext);
+  const {
+    increaseItemQuantityOrder,
+    decreaseItemQuantityOrder,
+    removeItemOrder,
+  } = useContext(CartContext);
 
   function handleIncrease() {
-    changeCartItemQuantity(product.id, 'increase');
+    increaseItemQuantityOrder(product.id, 'increase');
   }
 
   function handleDecrease() {
-    changeCartItemQuantity(product.id, 'decrease');
+    decreaseItemQuantityOrder(product.id, 'decrease');
   }
 
   function handleDeleteItem() {
-    deleteCartItem(product.id);
+    removeItemOrder(product.id);
   }
 
   return (

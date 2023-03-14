@@ -11,26 +11,63 @@ export interface Order {
 
 export function orderReducer(state: Order, action: any) {
   switch (action.type) {
-    case 'ADD_PRODUCT_TO_ORDER': {
-      const itemExist = state.items.findIndex(
+    case 'ADD_ITEM_TO_ORDER': {
+      const indexItemInOrder = state.items.findIndex(
         (cartItem) => cartItem.id === action.payload.item.id
       );
-      console.log(itemExist);
-
-      if (itemExist < 0) {
-        const updateState = {
+      if (indexItemInOrder >= 0) {
+        const mergedItem = state.items.map((items) =>
+          items.id === action.payload.item.id
+            ? {
+                ...items,
+                quantity: items.quantity + action.payload.item.quantity,
+              }
+            : items
+        );
+        return { ...state, items: mergedItem };
+      } else {
+        const addItem = {
           ...state,
           items: [...state.items, action.payload.item],
         };
-        return updateState;
-      } else {
-        const mergedState = state.items.map(
-          (items) => items.id === action.payload.item.id
-        );
+        return addItem;
       }
-      // console.log(updateState);
-      // return updateState;
     }
+
+    case 'INCREASE_QUANTITY_ITEM': {
+      const itemInOrder = state.items.map((item) => {
+        if (item.id === action.payload.itemId) {
+          return { ...item, quantity: item.quantity + 1 };
+        } else {
+          return item;
+        }
+      });
+      return { ...state, items: itemInOrder };
+    }
+
+    case 'DECREASE_QUANTITY_ITEM': {
+      const itemInOrder = state.items.map((item) => {
+        if (item.id === action.payload.itemId) {
+          return { ...item, quantity: item.quantity - 1 };
+        } else {
+          return item;
+        }
+      });
+      return { ...state, items: itemInOrder };
+    }
+
+    case 'REMOVE_ITEM_IN_ORDER': {
+      const itemInOrder = state.items.map((item) => {
+        if (item.id === action.payload.itemId) {
+          return { ...state.items, items: state.id !== action.payload.itemId };
+        } else {
+          return item;
+        }
+      });
+      console.log(itemInOrder);
+      return { ...state, items: itemInOrder }
+    }
+
     default:
       return state;
   }

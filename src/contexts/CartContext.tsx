@@ -6,7 +6,6 @@ import {
   useState,
 } from 'react';
 import { Product } from '../pages/Home/components/CoffeeCard';
-import { produce } from 'immer';
 import { Order, orderReducer } from '../reducer/order-reducer';
 
 export interface CartItem extends Product {
@@ -28,12 +27,9 @@ export interface CartContextType {
   addItemToOrder: (item: CartItem) => void;
   cartItems: CartItem[];
   cartQuantity: number;
-  addProductToCart: (product: CartItem) => void;
-  changeCartItemQuantity: (
-    cartItemId: number,
-    type: 'increase' | 'decrease'
-  ) => void;
-  deleteCartItem: (cartItemId: number) => void;
+  increaseItemQuantityOrder: (itemId: number, type: 'increase') => void;
+  decreaseItemQuantityOrder: (itemId: number, type: 'decrease') => void;
+  removeItemOrder: (cartItemId: number) => void;
   cartItemsTotal: number;
 }
 
@@ -69,57 +65,42 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   function addItemToOrder(item: CartItem) {
     dispach({
-      type: 'ADD_PRODUCT_TO_ORDER',
+      type: 'ADD_ITEM_TO_ORDER',
       payload: {
         item: item,
       },
     });
   }
 
-  function addProductToCart(product: CartItem) {
-    const productAllreadyExistInCart = cartItems.findIndex(
-      (cartItem) => cartItem.id === product.id
-    );
-
-    const newCart = produce(cartItems, (draft) => {
-      if (productAllreadyExistInCart < 0) {
-        draft.push(product);
-      } else {
-        draft[productAllreadyExistInCart].quantity += product.quantity;
-      }
+  function increaseItemQuantityOrder(itemId: number, countType: 'increase') {
+    dispach({
+      type: 'INCREASE_QUANTITY_ITEM',
+      payload: {
+        itemId: itemId,
+        countType: countType,
+      },
     });
-    setCartItems(newCart);
   }
 
-  function changeCartItemQuantity(
-    cartItemid: number,
-    type: 'increase' | 'decrease'
-  ) {
-    const newCart = produce(cartItems, (draft) => {
-      const productExistsInCart = cartItems.findIndex(
-        (cartItem) => cartItem.id === cartItemid
-      );
-      if (productExistsInCart >= 0) {
-        const item = draft[productExistsInCart];
-        draft[productExistsInCart].quantity =
-          type === 'increase' ? item.quantity + 1 : item.quantity - 1;
-      }
+  function decreaseItemQuantityOrder(itemId: number, countType: 'decrease') {
+    dispach({
+      type: 'DECREASE_QUANTITY_ITEM',
+      payload: {
+        itemId: itemId,
+        countType: countType,
+      },
     });
-    setCartItems(newCart);
   }
 
-  function deleteCartItem(cartItemid: number) {
-    const newCart = produce(cartItems, (draft) => {
-      const productExistsInCart = cartItems.findIndex(
-        (cartItem) => cartItem.id === cartItemid
-      );
-      if (productExistsInCart >= 0) {
-        draft.splice(productExistsInCart /*the index */, 1);
-        // filter(t => t.id !== action.id);
-      }
+  function removeItemOrder(itemId: number) {
+    dispach({
+      type: 'REMOVE_ITEM_IN_ORDER',
+      payload: {
+        itemId: itemId,
+      },
     });
-    setCartItems(newCart);
   }
+  // filter(t => t.id !== action.id);
 
   return (
     <CartContext.Provider
@@ -127,10 +108,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         orderState,
         addItemToOrder,
         cartItems,
-        addProductToCart,
         cartQuantity,
-        changeCartItemQuantity,
-        deleteCartItem,
+        increaseItemQuantityOrder,
+        decreaseItemQuantityOrder,
+        removeItemOrder,
         cartItemsTotal,
       }}
     >
