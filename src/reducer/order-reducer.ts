@@ -57,12 +57,12 @@ export function orderReducer(state: Order, action: any) {
     }
 
     case 'REMOVE_ITEM_IN_ORDER': {
-      const itemInOrder = state.items.map((item) => {
-        if (item.id === action.payload.itemId) {
-          return { ...state.items, items: state.id !== action.payload.itemId };
-        } else {
-          return item;
-        }
+      const itemInOrder = state.items.filter((item) => {
+        // if (item.id === action.payload.itemId) {
+          return  item.id !== action.payload.itemId
+        // } else {
+          // return item;
+        // }
       });
       console.log(itemInOrder);
       return { ...state, items: itemInOrder }
