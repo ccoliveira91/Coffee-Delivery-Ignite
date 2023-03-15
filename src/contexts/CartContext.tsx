@@ -26,11 +26,9 @@ export interface CartContextType {
   orderState: Order;
   addItemToOrder: (item: CartItem) => void;
   cartItems: CartItem[];
-  cartQuantity: number;
   increaseItemQuantityOrder: (itemId: number, type: 'increase') => void;
   decreaseItemQuantityOrder: (itemId: number, type: 'decrease') => void;
-  removeItemOrder: (itemID: number) => void;
-  cartItemsTotal: number;
+  removeItemFromOrder: (itemID: number) => void;
 }
 
 interface CartContextProviderProps {
@@ -50,18 +48,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   } as Order);
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
-  const cartQuantity = cartItems.length;
-
-  const cartItemsTotal = cartItems.reduce((total, cartItem) => {
-    return total + cartItem.price * cartItem.quantity;
-  }, 0);
-
-  const [orderIsValid, setOrderIsValid] = useState<boolean>(false);
-
-  useEffect(() => {}, [orderIsValid]);
-
-  // function validationOrder() {}
 
   function addItemToOrder(item: CartItem) {
     dispach({
@@ -92,15 +78,14 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     });
   }
 
-  function removeItemOrder(itemID: number) {
+  function removeItemFromOrder(itemID: number) {
     dispach({
-      type: 'REMOVE_ITEM_IN_ORDER',
+      type: 'REMOVE_ITEM_FROM_ORDER',
       payload: {
         itemId: itemID,
       },
     });
   }
-  // filter(t => t.id !== action.id);
 
   return (
     <CartContext.Provider
@@ -108,11 +93,9 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         orderState,
         addItemToOrder,
         cartItems,
-        cartQuantity,
         increaseItemQuantityOrder,
         decreaseItemQuantityOrder,
-        removeItemOrder,
-        cartItemsTotal,
+        removeItemFromOrder,
       }}
     >
       {children}
