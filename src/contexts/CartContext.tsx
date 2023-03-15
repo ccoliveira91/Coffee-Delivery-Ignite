@@ -29,7 +29,7 @@ export interface CartContextType {
   cartQuantity: number;
   increaseItemQuantityOrder: (itemId: number, type: 'increase') => void;
   decreaseItemQuantityOrder: (itemId: number, type: 'decrease') => void;
-  removeItemOrder: (cartItemId: number) => void;
+  removeItemOrder: (itemID: number) => void;
   cartItemsTotal: number;
 }
 
@@ -92,11 +92,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     });
   }
 
-  function removeItemOrder(itemId: number) {
+  function removeItemOrder(itemID: number) {
     dispach({
       type: 'REMOVE_ITEM_IN_ORDER',
       payload: {
-        itemId: itemId,
+        itemId: itemID,
       },
     });
   }
