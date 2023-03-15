@@ -36,7 +36,7 @@ export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
   }
 
   return (
-    <CartCoffeeCardContainer>
+    <CartCoffeeCardContainer key={product.id}>
       <div>
         <img src={product.imageUrl} />
         <div>
