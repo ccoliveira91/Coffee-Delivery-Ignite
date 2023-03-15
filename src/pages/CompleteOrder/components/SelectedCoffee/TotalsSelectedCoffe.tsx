@@ -5,17 +5,22 @@ import { CartContext } from '../../../../contexts/CartContext';
 import { TotalsSelectedCoffeeContainer } from './styles';
 
 export function TotalsSelectedCoffee() {
-  const { cartItemsTotal } = useContext(CartContext);
-  const cartTotal = 3.5 + cartItemsTotal;
+  const { orderState } = useContext(CartContext);
+  const orderItemsTotal = orderState.items.reduce((total, cartItem) => {
+    return total + cartItem.price * cartItem.quantity;
+  }, 0);
+  const orderTotal = 3.5 + orderItemsTotal;
 
   return (
     <TotalsSelectedCoffeeContainer>
       <div>
         <RegularText size="s">Total de itens</RegularText>
-        <RegularText>R${' '}
-        {cartItemsTotal.toLocaleString('pt-BR', {
-          minimumFractionDigits: 2,
-        })}</RegularText>
+        <RegularText>
+          R${' '}
+          {orderItemsTotal.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+          })}
+        </RegularText>
       </div>
 
       <div>
@@ -29,15 +34,15 @@ export function TotalsSelectedCoffee() {
         </RegularText>
         <RegularText weight="700" color="subtitle" size="l">
           R${' '}
-        {cartTotal.toLocaleString('pt-BR', {
-          minimumFractionDigits: 2,
-        })}
+          {orderTotal.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+          })}
         </RegularText>
       </div>
 
       <Button
         text="Confirmar Pedido"
-        disabled={cartItemsTotal<1}
+        disabled={orderItemsTotal < 1}
         type="submit"
       />
     </TotalsSelectedCoffeeContainer>
