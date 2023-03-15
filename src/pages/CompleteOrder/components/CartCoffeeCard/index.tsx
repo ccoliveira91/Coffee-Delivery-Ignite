@@ -20,7 +20,7 @@ export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
   const {
     increaseItemQuantityOrder,
     decreaseItemQuantityOrder,
-    removeItemOrder,
+    removeItemFromOrder,
   } = useContext(CartContext);
 
   function handleIncrease() {
@@ -32,7 +32,7 @@ export function CartCoffeeCard({ product }: CartCoffeeCardProps) {
   }
 
   function handleDeleteItem() {
-    removeItemOrder(product.id);
+    removeItemFromOrder(product.id);
   }
 
   return (
