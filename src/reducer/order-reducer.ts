@@ -19,9 +19,9 @@ export function orderReducer(state: Order, action: any) {
         const mergedItem = state.items.map((items) =>
           items.id === action.payload.item.id
             ? {
-                ...items,
-                quantity: items.quantity + action.payload.item.quantity,
-              }
+              ...items,
+              quantity: items.quantity + action.payload.item.quantity,
+            }
             : items
         );
         return { ...state, items: mergedItem };
@@ -57,15 +57,11 @@ export function orderReducer(state: Order, action: any) {
     }
 
     case 'REMOVE_ITEM_IN_ORDER': {
-      const itemInOrder = state.items.filter((item) => {
-        // if (item.id === action.payload.itemId) {
-          return  item.id !== action.payload.itemId
-        // } else {
-          // return item;
-        // }
-      });
-      console.log(itemInOrder);
-      return { ...state, items: itemInOrder }
+      console.log(action.payload.itemId)
+      const evens = state.items.filter(item => item.id !== action.payload.itemId);
+      //console.log(evens)
+
+      return {...state, items: evens}
     }
 
     default:
