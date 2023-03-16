@@ -1,14 +1,23 @@
-import { CreditCard } from 'phosphor-react';
-import { useContext } from 'react';
-import { CartContext } from '../../../../contexts/CartContext';
-import { PaymentInputContainer } from './styles';
+import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
+import { ContentContainer, PaymentInputContainer } from './styles';
 
-export function PaymentInput() {
+type PaymentInputProps = InputHTMLAttributes<HTMLInputElement> & {
+  icon: ReactNode;
+  label: string;
+};
 
-  return (
-    <PaymentInputContainer>
-      <CreditCard size={16} />
-      Cartão de crédito
-    </PaymentInputContainer>
-  );
-}
+export const PaymentInput = forwardRef<HTMLInputElement, PaymentInputProps>(
+  ({ id, icon, label, ...props }, ref) => {
+    return (
+      <PaymentInputContainer>
+        <input id={id} type="radio" {...props} name="paymentMethod" ref={ref} />
+        <label htmlFor={id}>
+          <ContentContainer>
+            {icon}
+            {label}
+          </ContentContainer>
+        </label>
+      </PaymentInputContainer>
+    );
+  }
+);
