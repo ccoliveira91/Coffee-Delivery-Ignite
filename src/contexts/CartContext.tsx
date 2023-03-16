@@ -49,6 +49,24 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
+  const [orderIsValid, setOrderIsValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    validateOrder();
+  }, [orderIsValid, orderState]);
+
+  function validateOrder() {
+    if (
+      orderState.items.length > 0 &&
+      Object.entries(orderState.payment).length > 0
+      //Object.entries(orderState.address).length > 0
+    ) {
+      setOrderIsValid(() => true);
+    } else {
+      setOrderIsValid(() => false);
+    }
+  }
+
   function addItemToOrder(item: CartItem) {
     dispach({
       type: 'ADD_ITEM_TO_ORDER',
