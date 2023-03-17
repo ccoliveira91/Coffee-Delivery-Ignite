@@ -57,12 +57,23 @@ export function orderReducer(state: Order, action: any) {
     }
 
     case 'REMOVE_ITEM_FROM_ORDER': {
-      console.log(action.payload.itemId);
       const itemInOrder = state.items.filter(
         (item) => item.id !== action.payload.itemId
       );
 
       return { ...state, items: itemInOrder };
+    }
+
+    case 'CLEAN_ORDER': {
+      const cleanState = {
+        id: '',
+        items: [],
+        address: {} as Address,
+        payment: 0,
+        deliveryPrice: 0,
+        totalPrice: 0,
+      };
+      return cleanState;
     }
 
     default:
