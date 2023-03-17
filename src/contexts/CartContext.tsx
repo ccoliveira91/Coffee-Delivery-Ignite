@@ -1,7 +1,6 @@
 import {
   createContext,
   ReactNode,
-  useEffect,
   useReducer,
   useState,
 } from 'react';
@@ -29,6 +28,7 @@ export interface CartContextType {
   increaseItemQuantityOrder: (itemId: number, type: 'increase') => void;
   decreaseItemQuantityOrder: (itemId: number, type: 'decrease') => void;
   removeItemFromOrder: (itemID: number) => void;
+  cleanOrder: () => void;
 }
 
 interface CartContextProviderProps {
@@ -48,24 +48,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   } as Order);
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
-  const [orderIsValid, setOrderIsValid] = useState<boolean>(false);
-
-  useEffect(() => {
-    validateOrder();
-  }, [orderIsValid, orderState]);
-
-  function validateOrder() {
-    if (
-      orderState.items.length > 0 &&
-      Object.entries(orderState.payment).length > 0
-      //Object.entries(orderState.address).length > 0
-    ) {
-      setOrderIsValid(() => true);
-    } else {
-      setOrderIsValid(() => false);
-    }
-  }
 
   function addItemToOrder(item: CartItem) {
     dispach({
@@ -105,6 +87,12 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     });
   }
 
+  function cleanOrder() {
+    dispach({
+      type: 'CLEAN_ORDER',
+    });
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -114,6 +102,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         increaseItemQuantityOrder,
         decreaseItemQuantityOrder,
         removeItemFromOrder,
+        cleanOrder,
       }}
     >
       {children}
