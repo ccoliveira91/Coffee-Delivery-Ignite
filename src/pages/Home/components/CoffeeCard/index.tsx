@@ -5,7 +5,6 @@ import {
   CoffeeName,
   CoffeTag,
 } from './styles';
-import expressotradicional from '../../../../assets/coffees-images/expresso-tradicional.svg';
 import { QuantityInput } from '../../../../components/QuantityInput';
 import { ShoppingCart } from 'phosphor-react';
 import { useContext, useState } from 'react';
